@@ -9,6 +9,7 @@ var treeR = 158;
 var treeG = 75;
 var treeB = 232;
 var changing = false;
+var angleScrow = false;
 
 // build in function
 function setup() {
@@ -21,13 +22,16 @@ function draw() {
     //Configurator
     configurator();
 
-    background(bgR, bgG, bgB);
-
     // Drawing Tree
     stroke(treeR, treeG, treeB);
     strokeWeight(2);
     translate(width / 2, height - 20);
     branch(200);
+
+    //angle varietions
+    if (angleScrow) {
+        angle += 0.001;
+    } else { angle = Math.PI / 4; }
 
 }
 
@@ -35,6 +39,7 @@ function drawConfigurator() {
     /*  Buttons  */
     treeColorButton = createButton("Random Tree Collor");
     bgButton = createButton("Random Background Collor");
+    autoRollButton = createButton("Auto Roll");
     treeColorCb = createCheckbox('Auto Run', false);
 }
 
@@ -45,8 +50,12 @@ function configurator() {
     treeColorButton.position(20, 20);
     treeColorButton.mousePressed(treeColor);
 
-    bgButton.position(20, 20 + treeColorButton.height);
+    bgButton.position(20, 20 + treeColorButton.position().y);
     bgButton.mousePressed(bgColor);
+    background(bgR, bgG, bgB); // the background must appear before the text 
+
+    autoRollButton.position(20, 20 + bgButton.position().y);
+    autoRollButton.mousePressed(autoRoll);
 
 
     // i've set this first then the check buttons, because if i didnt it wil wait one update to appear
@@ -82,7 +91,6 @@ function configurator() {
                 treeR = 0;
                 treeG = 0;
                 treeB = 0;
-
             }
         }
     }
@@ -99,6 +107,12 @@ function configurator() {
         treeG = random(255);
         treeB = random(255);
 
+    }
+
+    function autoRoll() {
+        if (angleScrow) {
+            angleScrow = false;
+        } else { angleScrow = true; }
     }
 
 }
