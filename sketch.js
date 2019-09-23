@@ -48,7 +48,6 @@ function configurator() {
     treeColorCb.position(treeColorButton.width + 20, 20);
     treeColorCb.color = "White";
     treeColorCb.font = "Arial";
-    treeColorCb.checked(function() { treeColor(); });
 
     // text Info / name
     var ctx = canvas.getContext("2d");
@@ -59,14 +58,18 @@ function configurator() {
     ctx.fillText("Made by Jairo Rauwers, Using P5.js", width / 2, 60);
 
 
-    // checkBox Functions
-    function myCheckedEvent() {
-        if (this.checked()) {
-            console.log('Checking!');
-        } else {
-            console.log('Unchecking!');
+    // checkBox ifs
+    if (treeColorCb.checked() == true) {
+        if (treeR > 256) { treeR++; }
+        if (treeG > 256) { treeG++; }
+        if (treeB > 256) { treeB++; }
+        if (treeR > 255 && treeG > 255 && treeB > 255) {
+            treeR = 0;
+            treeG = 0;
+            treeB = 0;
         }
     }
+
     // buttons Functions
     function bgColor() {
         bgR = random(255);
