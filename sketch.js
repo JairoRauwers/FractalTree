@@ -40,8 +40,8 @@ function drawConfigurator() {
     treeColorButton = createButton("Random Tree Collor");
     bgButton = createButton("Random Background Collor");
     autoRollButton = createButton("Auto Roll");
-    angleScrowPlusBtn = createButton("-");
-    angleScrowMinBtn = createButton("+");
+    angleScrowPlusBtn = createButton("+");
+    angleScrowMinBtn = createButton("-");
     treeColorCb = createCheckbox('Auto Run', false);
 }
 
@@ -124,9 +124,9 @@ function configurator() {
 
     function autoRoll() { if (angleScrow) { angleScrow = false; } else { angleScrow = true; } }
 
-    function scrowMin() { if (speed > 0.001) { speed = 0.001; } else { speed -= 0.001; } }
+    function scrowMin() { if (speed <= 0.001) { speed = 0.001; } else { speed = speed - 0.001; } }
 
-    function scrowPlus() { speed -= 0.001; }
+    function scrowPlus() { speed += 0.001; }
 
 }
 
