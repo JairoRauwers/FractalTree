@@ -8,6 +8,7 @@ var bgB = 61;
 var treeR = 158;
 var treeG = 75;
 var treeB = 232;
+var changing = false;
 
 // build in function
 function setup() {
@@ -38,6 +39,8 @@ function drawConfigurator() {
 }
 
 function configurator() {
+
+
     // Buttons Config 
     treeColorButton.position(20, 20);
     treeColorButton.mousePressed(treeColor);
@@ -45,9 +48,8 @@ function configurator() {
     bgButton.position(20, 20 + treeColorButton.height);
     bgButton.mousePressed(bgColor);
 
-    treeColorCb.position(treeColorButton.width + 20, 20);
-    treeColorCb.color = "White";
-    treeColorCb.font = "Arial";
+
+    // i've set this first then the check buttons, because if i didnt it wil wait one update to appear
 
     // text Info / name
     var ctx = canvas.getContext("2d");
@@ -58,15 +60,33 @@ function configurator() {
     ctx.fillText("Made by Jairo Rauwers, Using P5.js", width / 2, 60);
 
 
+
+    // Check Buttons
+    treeColorCb.position(treeColorButton.width + 20, 20);
+    treeColorCb.color = "White";
+    treeColorCb.font = "Arial";
+
+    treeColorButton.
+
+
     // checkBox ifs
-    if (treeColorCb.checked() == true) {
-        if (treeR > 256) { treeR++; }
-        if (treeG > 256) { treeG++; }
-        if (treeB > 256) { treeB++; }
-        if (treeR > 255 && treeG > 255 && treeB > 255) {
-            treeR = 0;
-            treeG = 0;
-            treeB = 0;
+    if(treeColorCb.checked() == true) {
+
+        if (changing == false) {
+            if (treeR < 256) { treeR++; } else if (treeG < 256) { treeG++; } else if (treeB < 256) { treeB++; }
+        }
+        if (changing == true || treeB > 255) {
+            changing = true;
+            treeR--;
+            treeG--;
+            treeB--;
+            if (treeR == 0) {
+                changing = false;
+                treeR = 0;
+                treeG = 0;
+                treeB = 0;
+
+            }
         }
     }
 
