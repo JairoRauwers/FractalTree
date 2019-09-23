@@ -10,6 +10,8 @@ var treeG = 75;
 var treeB = 232;
 var changing = false;
 var angleScrow = false;
+var speed = 0.01;
+
 
 // build in function
 function setup() {
@@ -24,14 +26,12 @@ function draw() {
 
     // Drawing Tree
     stroke(treeR, treeG, treeB);
-    strokeWeight(2);
+    strokeWeight(1);
     translate(width / 2, height - 20);
-    branch(200);
+    branch(height / 4);
 
     //angle varietions
-    if (angleScrow) {
-        angle += 0.001;
-    } else { angle = Math.PI / 4; }
+    if (angleScrow) { angle += speed; }
 
 }
 
@@ -40,11 +40,20 @@ function drawConfigurator() {
     treeColorButton = createButton("Random Tree Collor");
     bgButton = createButton("Random Background Collor");
     autoRollButton = createButton("Auto Roll");
+    angleScrowPlusBtn = createButton("-");
+    angleScrowMinBtn = createButton("+");
     treeColorCb = createCheckbox('Auto Run', false);
 }
 
 function configurator() {
-
+    // try buttons show 
+    if (angleScrow) {
+        angleScrowMinBtn.disabled = false;
+        angleScrowMinBtn.disabled = false;
+    } else {
+        angleScrowMinBtn.disabled = true;
+        angleScrowMinBtn.disabled = true;
+    }
 
     // Buttons Config 
     treeColorButton.position(20, 20);
@@ -56,6 +65,11 @@ function configurator() {
 
     autoRollButton.position(20, 20 + bgButton.position().y);
     autoRollButton.mousePressed(autoRoll);
+
+    angleScrowPlusBtn.position(autoRollButton.position().x + autoRollButton.width, 20 + bgButton.position().y);
+    angleScrowPlusBtn.mousePressed(scrowPlus);
+    angleScrowMinBtn.position(angleScrowPlusBtn.position().x + angleScrowPlusBtn.width, 20 + bgButton.position().y);
+    angleScrowMinBtn.mousePressed(scrowMin);
 
 
     // i've set this first then the check buttons, because if i didnt it wil wait one update to appear
@@ -77,7 +91,6 @@ function configurator() {
 
     // checkBox ifs
     if (treeColorCb.checked() == true) {
-
         if (changing == false) {
             if (treeR < 256) { treeR++; } else if (treeG < 256) { treeG++; } else if (treeB < 256) { treeB++; }
         }
@@ -109,26 +122,35 @@ function configurator() {
 
     }
 
-    function autoRoll() {
-        if (angleScrow) {
-            angleScrow = false;
-        } else { angleScrow = true; }
-    }
+    function autoRoll() { if (angleScrow) { angleScrow = false; } else { angleScrow = true; } }
+
+    function scrowMin() { if (speed > 0.001) { speed = 0.001; } else { speed -= 0.001; } }
+
+    function scrowPlus() { speed -= 0.001; }
 
 }
 
 // extra functions
 function branch(len) {
+    var lenMin = 0.65;
     line(0, 0, 0, -len);
     translate(0, -len);
-    if (len > 4) {
+    if (len > 20) {
+        push();
+        rotate(angle / 2);
+        branch(len * lenMin);
+        pop();
+        push();
+        rotate(-angle / 2);
+        branch(len * lenMin);
+        pop();
         push();
         rotate(angle);
-        branch(len * 0.67);
+        branch(len * lenMin);
         pop();
         push();
         rotate(-angle);
-        branch(len * 0.67);
+        branch(len * lenMin);
         pop();
     }
 }
