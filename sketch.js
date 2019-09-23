@@ -66,11 +66,8 @@ function configurator() {
     treeColorCb.color = "White";
     treeColorCb.font = "Arial";
 
-    treeColorButton.
-
-
     // checkBox ifs
-    if(treeColorCb.checked() == true) {
+    if (treeColorCb.checked() == true) {
 
         if (changing == false) {
             if (treeR < 256) { treeR++; } else if (treeG < 256) { treeG++; } else if (treeB < 256) { treeB++; }
